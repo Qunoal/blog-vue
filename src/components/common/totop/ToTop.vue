@@ -22,8 +22,8 @@
             cliToTop() {
                 let timer = setInterval(() => {
                     let top = document.documentElement.scrollTop; //900
-                    //let number = top / 3;                         //300
-                    let final_location = top - 150;            //600
+                    // let number = top / 3;                         //300
+                    let final_location = top - 180  //number - 150;            //600
 
                     if (final_location <= 300) {
                         // final_location = final_location - 50

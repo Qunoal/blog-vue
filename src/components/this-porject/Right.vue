@@ -6,7 +6,7 @@
             <section>
                 <!-- 图片-->
                 <div calass="right-head-1">
-                    <img src="~@/assets/img/right/right.jpg">
+                    <img src="~@/assets/img/right/dm01.jpg">
                 </div>
 
                 <!--其它信息-->
@@ -17,27 +17,35 @@
                         <!--第一排按钮-->
                         <div>
                             <el-tooltip class="item" content="Github" placement="top">
-                                <a href="#" target="_blank"><i class="fa fa-fw fa-github"></i></a>
+                                <a href="https://github.com/sgiao" target="_blank"><i class="fa fa-fw fa-github"></i></a>
                             </el-tooltip>
+
+                            <!--/img/qq.874454d2.png-->
                             <el-tooltip class="item" effect="dark" content="QQ" placement="top">
-                                <a href="#" target="_blank"><i class="fa fa-fw fa-qq"></i></a>
+                                <a href="/img/qq.874454d2.png" target="_blank"><i class="fa fa-fw fa-qq"></i></a>
                             </el-tooltip>
-                            <el-tooltip class="item" effect="dark" content="微博" placement="top">
-                                <a href="" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
+
+                            <!--/img/wx.307cf18d.png-->
+                            <el-tooltip class="item" effect="dark" content="微信" placement="top">
+                                <a href="/img/wx.307cf18d.png" target="_blank"><i class="fa fa-fw fa-wechat"></i></a>
                             </el-tooltip>
+
                         </div>
                         <!--第二排按钮-->
                         <div>
-                            <el-tooltip class="item" effect="dark" content="微信" placement="top">
-                                <a href="#" target="_blank"><i class="fa fa-fw fa-wechat"></i></a>
+                            <el-tooltip class="item" effect="dark" content="微博" placement="top">
+                                <a href="https://www.weibo.com/login.php/" target="_blank"><i class="fa fa-fw fa-weibo"></i></a>
                             </el-tooltip>
+
                             <el-tooltip class="item" effect="dark" content="CSDN" placement="top">
-                                <a href="#" target="_blank"><i class="">C</i></a>
+                                <a href="https://www.csdn.net/" target="_blank"><i class="">C</i></a>
                             </el-tooltip>
+
                             <el-tooltip class="item" effect="dark" content="简历" placement="top">
                                 <a href="#" target="_blank"><i
                                         class="fa fa-fw fa-file-word-o"></i></a>
                             </el-tooltip>
+
                             <el-tooltip class="item" effect="dark" content="更多" placement="top">
                                 <a href="javascript:void(0)" @click="toAbout"><i class="el-icon-more"></i></a>
                             </el-tooltip>
@@ -58,37 +66,35 @@
 
 
             <!-- 第三个 空行，分割-->
-            <section></section>
+            <section>
+<!--                <img src="~@/assets/img/right/qq.png" alt="">-->
+<!--                <img src="~@/assets/img/right/wx.png" alt="">-->
+            </section>
+
 
             <!--第四个盒子: 大家都在说-->
             <section>
                 <div class="table">
-                    <table-page message="大家都在说"/>
+                    <table-page message="最新评论"/>
                 </div>
 
                 <ul class="said-list">
-                    <li>
-                        <a href="">
+                    <li v-for="item in said">
+                        <a :href="'/detailPage?aid='+item.belongArticle"> <!--取出评论的文章-->
                             <div class="said-list-avatar">
-                                <img src="~@/assets/img/common/Tourists-Logo.jpg" alt="加载失败">
+                                <img src="~@/assets/img/common/Tourists-Logo.jpg" alt="">
                             </div>
                             <div class="said-list-text">
-                                <p class="p1">游客 在sdfasfsfsdf中说:</p>
-                                <p>fdsafsdafsdfsaddddddddd</p>
+                                <p class="p1">游客 在「...文章」中说:</p>
+                                <p class="p2">{{item.content}}</p>
                             </div>
-
                         </a>
                     </li>
-                    <li><a href="">列表2</a></li>
-                    <li><a href="">列表3</a></li>
-                    <li><a href="">列表4</a></li>
-                    <li><a href="">列表5</a></li>
-                    <li><a href="">列表6</a></li>
-                    <li><a href="">列表7</a></li>
-                    <li><a href="">列表8</a></li>
+
                 </ul>
 
             </section>
+
 
             <!--第五个盒子：大家都在看-->
             <section>
@@ -96,17 +102,10 @@
                     <table-page message="大家都在看"/>
                 </div>
                 <ul class="show-list">
-
-                    <li><a href="http://baidu.com/" target="_blank">百度</a>
-                        <span> —— {{OnlookersNumber}} 次围观</span>
+                    <li v-for="item in RecommendArticle">
+                        <a :href="'/detailPage?aid='+item.id" target="_blank">{{item.title}}</a>
+                        <span>——{{item.readNumber}} 次围观</span>
                     </li>
-                    <li><a href="">列表</a> <span> —— {{OnlookersNumber}} 次围观</span></li>
-                    <li><a href="">列 阀手动阀表</a> <span> —— {{OnlookersNumber}} 次围观</span></li>
-                    <li><a href="">列啊书法大赛的表sadfsdfad的方式发送</a><span> —— {{OnlookersNumber}} 次围观</span></li>
-                    <li><a href="">时尚大方十大 </a> <span> —— {{OnlookersNumber}} 次围观</span></li>
-                    <li><a href="">列表sadfsafs</a> <span> —— {{OnlookersNumber}} 次围观</span></li>
-                    <li><a href="">列表发圣达菲的萨芬</a> <span> —— {{OnlookersNumber}} 次围观</span></li>
-                    <li><a href="">列表%撒旦飞洒地方</a> <span> —— {{OnlookersNumber}} 次围观</span></li>
                 </ul>
             </section>
         </div>
@@ -116,16 +115,42 @@
 <!-- ---------------------------脚本区--------------------------- -->
 <script>
     import TablePage from "../common/TablePage";
+    /**
+     * 网络请求相关方法
+     */
+    import {increase, getRedHeartNumber, newComment, findRecommendArticle} from "../../network/Right"
 
     export default {
         name: "Right",
         props: {},
         data() {
             return {
-                LikeNumber: 5000, //统计赞个数
+                LikeNumber: 0, //统计赞个数
                 isShow: true, // 默认可以点击
                 OnlookersNumber: 200,// 围观数量
+                said: [],//大家都在说
+                // currentIndex: 0,
+                RecommendArticle: [],//推荐文章
             }
+        },
+        created() {
+            // 向服务器请求数据：点赞红心数据
+            getRedHeartNumber().then(res => {
+                this.LikeNumber = res.data;
+            })
+
+            // 最新评论 数据
+            newComment().then(res => {
+                this.said = res.data;
+            })
+
+            //获取观看最多的文章
+            findRecommendArticle().then(res => {
+                this.RecommendArticle = res.data
+                console.log(res.data)
+            })
+
+
         },
         components: {
             TablePage
@@ -145,22 +170,24 @@
                         clearTimeout(timer);
                     }, 1500);
 
-                } else {
-                    console.log(this.LikeNumber)
-                    console.log("不可点击")
+                    /**
+                     * 网络请求点赞
+                     */
+                    increase();
                 }
-
-
             },
-
 
             /*去关于页面*/
             toAbout() {
-                //如果是当前 路由，就不用跳了
-                if (this.$route.path.valueOf(this.$route.path) != -1) {
+                //如果是当前页面，就不用跳了
+                if (this.$route.path.indexOf("/about") != -1) {
                     return "";
+                } else {
+                    this.$router.push("/about")
                 }
-            }
+
+            },
+
         }
     }
 </script>
@@ -374,6 +401,10 @@
         font-weight: 700;
     }
 
+    .p2 {
+        font-size: 12px;
+    }
+
     /***********************************大家都在看***********************************/
     .show-list {
         list-style: none;
@@ -381,7 +412,7 @@
     }
 
     .show-list li {
-        padding: 8px 0px ;
+        padding: 8px 0px;
     }
 
     .show-list li a {

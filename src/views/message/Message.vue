@@ -1,17 +1,21 @@
 <!-- ---------------------------模板区--------------------------- -->
+
+<!---------------- 留言板--------------- -->
 <template>
-    <div id="about">
+    <div id='Message'>
         <el-row :gutter="30">
             <!--左侧视图-->
             <el-col :md="16">
-                <!--关于我-->
-                <info/>
+                <!-- 留言板信息 -->
+                <message-info/>
 
-                <!--评论-->
+                <!--评论信息-->
                 <comment :commentsInfos="comments"/>
+
+
             </el-col>
 
-            <!--右侧视图-->
+            <!--右侧视图 通用-->
             <el-col :md="8">
                 <right/>
             </el-col>
@@ -19,55 +23,52 @@
     </div>
 </template>
 
-
 <!-- ---------------------------脚本区--------------------------- -->
 <script>
+    import MessageInfo from "./childComp/MessageInfo";
     import Right from "@/components/this-porject/Right";
-    import Info from "./childComp/AboutInfo";
     import Comment from "@/components/this-porject/Comment";
 
     /**
-     * 网络请求
+     * 网络请求评论数据
      */
-    import {findComment} from "../../network/Comment"
+    import {findComment} from "../../network/Comment";
 
     export default {
-        name: "About",
+        name: "Message",
         components: {
             Right,
-            Info,
-            Comment
+            Comment,
+            MessageInfo
         },
         data() {
             return {
-                comments: [], //评论信息
-                httpError: false,
+                comments: []  //评论信息
             }
         },
         created() {
-            //
             let belong = this.$route.path.replace("/", '');
 
-            //根据模块获取评论
+            // 查询该模块下的评论信息
             findComment(belong).then(res => {
                 this.comments = res.data;
-
             }).catch(err => {
                 console.log(err)
-                this.httpError = true;
             });
+
         },
         mounted() {
             document.documentElement.scrollTop = 865;
         }
-
     }
 </script>
 
 <!-- ---------------------------样式区--------------------------- -->
 <style scoped>
-    #about {
+    #Message {
         width: 80%;
-        margin: 0px auto;
+        margin: 0 auto;
     }
+
+
 </style>

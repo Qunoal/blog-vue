@@ -1,6 +1,8 @@
 <!-- ---------------------------模板区--------------------------- -->
+<!-- ---------- 赞赏 ---------- -->
 <template>
-    <div id="about">
+    <div id='Appreciates'>
+
         <el-row :gutter="30">
             <!--左侧视图-->
             <el-col :md="16">
@@ -19,12 +21,11 @@
     </div>
 </template>
 
-
 <!-- ---------------------------脚本区--------------------------- -->
 <script>
-    import Right from "@/components/this-porject/Right";
-    import Info from "./childComp/AboutInfo";
-    import Comment from "@/components/this-porject/Comment";
+    import Info from "./childComp/Info";
+    import Comment from "../../components/this-porject/Comment";
+    import Right from "../../components/this-porject/Right";
 
     /**
      * 网络请求
@@ -32,7 +33,7 @@
     import {findComment} from "../../network/Comment"
 
     export default {
-        name: "About",
+        name: "Appreciates",
         components: {
             Right,
             Info,
@@ -40,34 +41,26 @@
         },
         data() {
             return {
-                comments: [], //评论信息
-                httpError: false,
+                comments: []
             }
         },
         created() {
-            //
             let belong = this.$route.path.replace("/", '');
 
-            //根据模块获取评论
             findComment(belong).then(res => {
                 this.comments = res.data;
 
             }).catch(err => {
                 console.log(err)
-                this.httpError = true;
             });
         },
-        mounted() {
-            document.documentElement.scrollTop = 865;
-        }
-
     }
 </script>
 
 <!-- ---------------------------样式区--------------------------- -->
 <style scoped>
-    #about {
+    #Appreciates {
         width: 80%;
-        margin: 0px auto;
+        margin: 0 auto;
     }
 </style>

@@ -3,9 +3,11 @@ import App from './App.vue'
 import router from './router'
 import './plugin/element'
 
-// Vue.config.productionTip = false
+
+// 事件总线
+Vue.prototype.$bus = new Vue()
 
 new Vue({
-  render: h => h(App),
-  router,
+    router,
+    render: h => h(App),
 }).$mount('#app')
